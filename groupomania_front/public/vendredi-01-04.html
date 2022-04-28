@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Hello React!</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="test_2.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function CarEdit(props) {
+        return <li>I am a {props.brand}</li>;
+      }
+
+      function Garage() {
+        const cars = ["Ford", "BMW2", "Audi"];
+        return (
+          <div>
+            <h1>Who lives in my garage?</h1>
+            <ul>
+              {cars.map((car) => (
+                <CarEdit brand={car} />
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      const name = "Clarisse Agbegnenou";
+      const user_2 = ["Anne2", "Chloé", "Léa", "Claire", "Tito", "léon"];
+
+      // const numbers = [1, 2, 3, 4, 5];
+
+      function ListItem(props) {
+        return <li>{props.value}</li>;
+      }
+
+      function PrenomList(props) {
+        const numbers = props.numbers;
+
+        return (
+          <ul>
+            {numbers.map((number) => (
+              <ListItem key={number.toString()} value={number} />
+            ))}
+          </ul>
+        );
+      }
+      /*  function Example1() {
+        // Déclaration d'une nouvelle variable d'état, que l'on appellera “count”
+        //  const [count, setCount] = useState(0);
+
+        return (
+          <div>
+            <p>Vous avez cliqué {count} fois</p>
+            <button onClick={() => setCount(count + 1)}>Cliquez ici</button>
+          </div>
+        );
+      }
+      function Example2() {
+        // Déclaration d'une nouvelle variable d'état, que l'on appellera “count”
+        const [count, setCount] = useState(0);
+
+        return (
+          <div>
+            <p>Vous avez cliqué fois</p>
+            <button>Cliquez ici</button>
+          </div>
+        );
+      } */
+      function MyForm() {
+        const handleSubmit = (event) => {
+          event.preventDefault();
+          alert(`The name you entered was: ${this.value}`);
+        };
+
+        return (
+          <form onSubmit={handleSubmit}>
+            <label>
+              Enter your name:
+              <input type="text" value="toto" />
+            </label>
+            <input type="submit" value=" je valide" />
+          </form>
+        );
+      }
+
+      function MyForm2() {
+        /*  const handleChange = (event) => {
+          alert(event.target.value);
+            {cars.map((car) => <Car brand={car} />)}
+        }; */
+        const user_3 = ["Anne2", "Chloé", "Léa", "Claire", "Tito", "léon"];
+
+        return (
+          <form>
+            <select value="truc">
+              <option value="Ford">Ford</option>
+              <option value="Volvo">Volvo</option>
+              <option value="Fiat">Fiat</option>
+            </select>
+          </form>
+        );
+      }
+
+      function Blog(props) {
+        const sidebar = (
+          <ul>
+            {props.posts.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </ul>
+        );
+        const content = props.posts.map((post) => (
+          <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+            <p> crée by : {post.user}</p>
+          </div>
+        ));
+        return (
+          <div>
+            {sidebar}
+            <hr />
+            {content}
+          </div>
+        );
+      }
+
+      //<Garage /><PrenomList numbers={numbers} />,
+
+      let element = (
+        <div>
+          <h3>Il est {new Date().toLocaleTimeString()}</h3>
+
+          <h1>Bonjour, {name}</h1>
+          <MyForm />
+          <Garage />
+          <PrenomList numbers={user_2} />
+          <h2>Le Blog</h2>
+          <Blog posts={posts2} />
+          <MyForm2 />
+        </div>
+      );
+      // <h1>Bonjour, {name}</h1>;
+      //element +=
+      /*
+       */
+
+      ReactDOM.render(element, document.getElementById("root"));
+      //ReactDOM.render(<App />, document.getElementById('root'))
+    </script>
+  </body>
+</html>
