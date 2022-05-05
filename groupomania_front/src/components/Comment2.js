@@ -1,45 +1,51 @@
-//import React, { useState } from "react";
+import React, { useState } from "react";
 
 function Comment2(props) {
   const comment = props.comment;
   const userComment = comment.User_com;
   const userLog = localStorage.getItem("userID");
 
+  const [inputs, setInputs] = useState({
+    Comment: comment.Text_com,
+  });
+
   const alterOk = userComment == userLog ? true : false;
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
-  //const truc=
+  const modifCommentValid = (byUser) => {
+    console.log(" modifCommentValid id " + byUser);
+  };
 
-  //console.log(comment);
+  const postBy = comment.persons.Id_user;
 
   return (
-    <div>
-      comment - {comment.Text_com}
-      <p>Publié par : {comment.persons.Pseudo}</p>
+    <div className="commentaire">
       {alterOk ? (
-        <p>
-          ok modif <button> ___Take theYYYYYYYYYYYYYYY shot!</button>
-        </p>
+        <>
+          <p>vous pouvez modifier votre message</p>
+          <label>
+            <div className="intitule">Commentaire :</div>
+            <textarea
+              type="text"
+              name="Comment"
+              value={inputs.Comment || ""}
+              onChange={handleChange}
+            />
+          </label>
+
+          <button onClick={() => modifCommentValid(postBy)}>faire Modif</button>
+        </>
       ) : (
-        <>No</>
+        <>
+          <div className="commentaire_txt">comment : {comment.Text_com}</div>
+          <p>Publié par : {comment.persons.Pseudo}</p>
+        </>
       )}
     </div>
   );
-  /*  return (
-      <div> <p> ecrit par {user.Pseudo}</p>
-        <p>son email : {user.Email} </p>
-        <button onClick={shoot}>{user.Pseudo} ___Take the shot!</button>
-        <button onClick={(event) => shoot2(user.Id_user)}>Take the shot!</button>
-       <hr /> 
-        <br />
-        votre email : {user.Email} <br />
-        {user.Id_user}
-        <br />
-        <a href="#" onClick={logOut(user.Id_user)}>
-          {user.Pseudo} Clique ici !
-        </a>
-        <hr></hr>
-        <button onClick={logOut2(user.Id_user)}>logOut2 la ligne</button>
-      </div>
-    ); */
 }
 export default Comment2;

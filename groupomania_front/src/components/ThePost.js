@@ -1,18 +1,16 @@
 import React from "react";
-import Post2 from "./components/Post2";
-import CreatePost2 from "./components/CreatePost2";
-import FormPost2 from "./components/FormPost2";
-//import Post2 from "./components/Post2";
-//import CreatePost2 from "./components/CreatePost2";
+import Post2 from "./Post2";
 
-//localStorage.setItem("userID", 11);
-//localStorage.setItem("theToken", "titi___5");
+import FormPost2 from "./FormPost2";
 
-const userLog = localStorage.getItem("userID");
 class GetRequest extends React.Component {
   constructor(props) {
     super(props);
-
+    props.user ? console.log(props.user) : console.log("NO");
+    props.url2 ? console.log("url ", props.url2) : console.log("NO");
+    /*  const Id_user = props.user;
+    console.log("yyyyyyyyyy ", user);
+ */
     this.state = {
       posts: [],
     };
@@ -28,8 +26,7 @@ class GetRequest extends React.Component {
     const { posts } = this.state;
     return (
       <div className="">
-        <div className="">Total Posts :{posts.length}</div>
-        {userLog ? <FormPost2 userLog={userLog} /> : <>Pas identifié</>}
+        <div className="">Total Posts :{posts.length},</div>
 
         {posts &&
           posts.map((post) => {
@@ -46,6 +43,13 @@ class GetRequest extends React.Component {
 
 export default GetRequest;
 
-/** <h3 key={user.Id_user} id={user.Id_user}>
+/**  <br />
+ *  const url2 = props.urlApi;
+    console.log("yyyyyyyyyy ", url2);
+ * 
+ * 
+         Id_user {Id_user}
+ *  {userLog ? <FormPost2 userLog={userLog} /> : <>Pas identifié</>}
+ * <h3 key={user.Id_user} id={user.Id_user}>
                   - {user.Pseudo} mail : {user.Email}
                 </h3> */

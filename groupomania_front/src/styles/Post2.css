@@ -1,0 +1,84 @@
+article {
+  background-color: rgb(91, 127, 113);
+  border: 2px solid black;
+  border-radius: 8px;
+
+  padding: 20px;
+  margin: 20px;
+
+  font-size: 20px;
+}
+article > h2 {
+  background-color: rgb(34, 52, 45);
+  border: 2px solid black;
+  border-radius: 8px;
+
+  padding: 10px;
+  margin: 10px;
+
+  font-size: 22px;
+}
+
+article .contenu {
+  border: 2px solid rgb(21, 3, 3);
+  border-radius: 8px;
+
+  padding: 10px;
+  margin: 10px;
+
+  font-size: 20px;
+}
+
+.modifier_post {
+  background-color: rgb(54, 66, 117);
+  border: 2px solid black;
+  border-radius: 8px;
+
+  padding: 20px;
+  margin: 20px;
+
+  font-size: 20px;
+}
+
+.intitule {
+  color: brown;
+  background-color: rgb(151, 153, 159);
+  border: 2px solid black;
+  width: 100px;
+  padding: 10px;
+  font-size: 20px;
+}
+
+#theText {
+  width: 60%;
+  height: 100px;
+  padding: 10px;
+  outline: 0;
+  border: 3px solid #1c87c9;
+  background: #d0e2bc;
+  line-height: 20px;
+}
+.modifier_post textarea {
+  border: 2px solid #1c87c9;
+  border-radius: 12px;
+  background: #d0e2bc;
+  width: 80%;
+  height: auto;
+  padding: 10px;
+  font-size: 20px;
+
+  line-height: 22px;
+}
+.commentaire {
+  border: 1px solid black;
+  border-radius: 24px 0px;
+  background: #d0e2bc;
+  font-size: 20px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.commentaire_txt {
+  margin-left: 10px;
+  color: blue;
+  font-size: 20px;
+}

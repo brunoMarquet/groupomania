@@ -1,3 +1,7 @@
+import { ReactSession } from "react-client-session";
+
+ReactSession.setStoreType("localStorage");
+
 function DialogApiBody(url, method2, headers2, body2) {
   console.dir(JSON.stringify(body2));
   return fetch(url, {
@@ -123,6 +127,7 @@ async function myLog(nom, psw) {
   const res = await DialogApiBody(url, method2, headers2, envoiPost);
   if (res) {
     console.log("log ?", res);
+    return res;
     //document.getElementById("lesUsers").innerHTML = afficheRes();
   }
 }
@@ -137,5 +142,19 @@ async function mySign(nom, psw) {
   console.log("Sign ?", res);
   return res;
 }
+function deConnect(idUser) {
+  console.log("Sign Raz ?", idUser);
+  // ReactSession.remove("token");
+  ReactSession.set("uu", idUser);
+  console.log("find ", ReactSession.get("uu"));
+}
 
-export { showPosts, deletePost, createPost, myLog, mySign, oneTitre };
+export {
+  showPosts,
+  deletePost,
+  createPost,
+  myLog,
+  mySign,
+  oneTitre,
+  deConnect,
+};
