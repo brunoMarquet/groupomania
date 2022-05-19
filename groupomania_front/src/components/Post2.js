@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import { React, useContext } from "react";
 import "../styles/Post2.css";
 //import { useState, createContext, useContext } from "react";
 
 import User2 from "./User2";
-import Comment2 from "./Comment2";
+//import Comment2 from "./Comment2";
 import Likes2 from "./Likes2";
 import PostModif2 from "./PostModif2";
+import Comments2 from "./Comments2";
+
+import { UserContext } from "../App";
 
 function Post2(props) {
+  const theContext = useContext(UserContext);
   const post = props.post;
   const comments2 = post.comments;
   const userPost = parseInt(post.Post_user);
-  const userLog = parseInt(localStorage.getItem("userID"));
+  const userLog = theContext.Id_user;
+
+  //const userLog = parseInt(localStorage.getItem("userID"));
   //console.log(userPost);
-  const alterOk = userPost === userLog ? true : false;
+  //const alterOk = userPost === userLog ? true : false;
 
   //const [user12, setUser] = useState("Jesse Hall");
 
@@ -35,14 +41,28 @@ function Post2(props) {
           alt={`image ${post.Titre} `}
         />
       ) : (
-        <></>
+        <>pas de visuel !</>
       )}
       <div className="contenu">{post.Contenu}</div>
       <p>posté le {post.Date_post}</p>
       by :{post.Post_user}
       <User2 {...props1} />
-      <PostModif2 post={post} />
+      {userPost === userLog ? <PostModif2 post={post} /> : <> </>}
       {comments2.length > 0 && (
+        <div>
+          <h3>You have {comments2.length} commentaires.</h3>
+
+          <Comments2 comments={comments2}></Comments2>
+        </div>
+      )}
+      <Likes2 likes={post.likes} />
+    </article>
+  );
+}
+export default Post2;
+
+/** 
+ *  {comments2.length > 0 && (
         <h3>You have {comments2.length} commentaires.</h3>
       )}
       {comments2 &&
@@ -53,13 +73,12 @@ function Post2(props) {
             </div>
           );
         })}
-      <Likes2 likes={post.likes} />
-    </article>
-  );
-}
-export default Post2;
-
-/**  <User2 user={post.persons} />
+ * 
+ * 
+ * 
+ * 
+ * 
+ *  <User2 user={post.persons} />
  * 
  * 
  *  {alterOk ? <PostModif2 post={post} /> : <User2 user={post.persons} />}

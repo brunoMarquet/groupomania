@@ -1,12 +1,15 @@
 //import logo from "./assets/logoGroupo.png";
+import { React, useContext } from "react";
 import logo from "../assets/logoGroupo.png";
-import Login2 from "./Login2";
+import { UserContext } from "../App";
 
 const Header = () => {
+  const theContext = useContext(UserContext);
   return (
     <header>
+      <img src={logo} alt="Logo" />
       <p> mon header...</p>
-      <img src={logo} alt="Logo" /> <Login2 />
+      {theContext.Pseudo}, ( id : {theContext.Id_user})
     </header>
   );
 };

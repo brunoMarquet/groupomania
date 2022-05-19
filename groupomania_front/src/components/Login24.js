@@ -1,5 +1,5 @@
-import { useState } from "react";
-import logo from "../assets/logoGroupo.png";
+import { React, useState } from "react";
+
 import "../styles/login.css";
 
 import * as outils from "../components/module/postEditer";
@@ -7,11 +7,11 @@ import { ReactSession } from "react-client-session";
 
 ReactSession.setStoreType("localStorage");
 
-function Login2() {
+function Login2(props) {
   const [inputs, setInputs] = useState({});
   const [reponse, setReponse] = useState({});
 
-  const oneUser = ReactSession.get("user") ?? {};
+  const oneUser = ReactSession.get("user") ?? false;
 
   // { Pseudo: "1001", password: "1001" };
   //ReactSession.get("user") ?? {};
@@ -24,12 +24,24 @@ function Login2() {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-  function raz2() {
-    localStorage.clear();
+  function raz2(id) {
+    //localStorage.clear();
     //ReactSession.set("user", {});
+
     ReactSession.remove("user");
-    setUser(0);
-    setReponse({ message: "truc RAZ" });
+    ReactSession.remove("token");
+    setInputs({ username: "" });
+    setUser(false);
+    setReponse(" Vous etes déconnecté");
+    props.setContext({
+      ...props.theContext,
+      Pseudo: 0,
+      Id_user: 0,
+      token: false,
+    });
+  }
+  function shoot2(a) {
+    console.log("55 ", a);
   }
 
   function truc22() {
@@ -46,16 +58,45 @@ function Login2() {
       outils
         .mySign(username, lePsw)
         .then((retour) => {
-          //console.log("rr", retour["person"]);
-          //setUser(oneUser);
-          setReponse(retour);
-          //setIsLogin(retour[person]);
+          ReactSession.set("user", retour.user);
+          ReactSession.set("token", retour.token);
+          setUser(retour.user);
+          setReponse(retour.message);
         })
-        .catch((error) => res.status(400).json({ error }));
+        .catch((error) => console.log(error));
     } else {
       alert("Merci de remplir les cases");
     }
   }
+
+  function Bonjour() {
+    //isAdmin: "5iXZqzBLs1ca
+    //if (user.userPseudo && user.Id_user) {
+    if (user.isAdmin) {
+      console.log("AA");
+      return (
+        <div>
+          Admin
+          <button onClick={() => raz2(user.Id_user)}>se déconnecter!</button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div>Bonjour {user.userPseudo} !</div>
+          <button onClick={() => raz2(user.Id_user)}>se déconnecter!</button>
+          <button onClick={() => shoot2(user.Id_user)}>
+            modifier mes infos!
+          </button>
+          <button onClick={() => shoot2(user.Id_user)}>mes posts!</button>
+          <button onClick={() => shoot2(user.Id_user)}>
+            mes commentaires!
+          </button>
+        </div>
+      );
+    }
+  }
+
   function theLog() {
     const lePsw = inputs.pwd;
     const username = inputs.username;
@@ -64,33 +105,29 @@ function Login2() {
       outils
         .myLog(username, lePsw)
         .then((retour) => {
-          // console.log("rr", retour["person"]);
-          setReponse(retour);
-          //setIsLogin(retour[person]);
+          props.setContext({
+            ...props.theContext,
+            Pseudo: retour.user.userPseudo,
+            Id_user: retour.user.userId,
+            token: retour.token,
+          });
+          ReactSession.set("user", retour.user);
+          ReactSession.set("token", retour.token);
+
+          setUser(retour.user);
+          setReponse(retour.message);
         })
-        .catch((error) => res.status(400).json({ error }));
+        .catch((error) => console.log(error));
     } else {
-      alert("Merci de remplir les cases");
+      //alert("Merci de remplir les cases");
+      setReponse("Merci de remplir les cases");
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
   return (
     <div>
-      {user.userPseudo ? (
-        <div>
-          <div>Bonjour {user.Pseudo} !</div>
-
-          <button onClick={(event) => theLog()} value=" ">
-            se deconnecter
-          </button>
-          <button onClick={(event) => raz2()} value=" ">
-            RAZ
-          </button>
-        </div>
+      {user ? (
+        <Bonjour />
       ) : (
         <div>
           <label>
@@ -113,17 +150,17 @@ function Login2() {
               onChange={handleChange}
             />
           </label>
-          <button onClick={(event) => sign2()} value=" ">
-            s'inscrire
+          <button onClick={() => sign2()} value=" ">
+            s inscrire
           </button>
-          <button onClick={(event) => login2()} value=" ">
+          <button onClick={() => theLog()} value=" ">
             se loger
           </button>
-          <button onClick={(event) => truc22()} value=" ">
+          <button onClick={() => truc22()} value=" ">
             test
           </button>
-          <button onClick={(event) => raz2()} value=" ">
-            RAZ
+          <button onClick={() => raz2()} value=" ">
+            RAZ ? debug?
           </button>
         </div>
       )}
@@ -135,6 +172,10 @@ function Login2() {
 export default Login2;
 
 /**
+ *  {user ? (
+        <Bonjour />
+      ) : ()
+ * 
  * <div>
         ton nom :{reponse.Pseudo} id : {reponse.Id_user}
       </div>

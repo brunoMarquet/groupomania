@@ -1,38 +1,59 @@
+import { React, useState, createContext } from "react";
+//import Test4 from "./test/Test4";
+//import Login2 from "./components/Login2";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Login2 from "./components/Login24";
 import ThePost from "./components/ThePost";
 
-import * as outils from "./module/postEditer";
+export const UserContext = createContext();
+
 import { ReactSession } from "react-client-session";
 
-export default function App({ name, callback }) {
-  //localStorage.clear();
-  //const oneUser = ReactSession.get("user") ?? {};
-  const oneUser = ReactSession.get("user");
-  let props = {
-    user: "oneUser Titi2222",
-    url2: "http://localhost:3100/api/posts",
+ReactSession.setStoreType("localStorage");
+
+function App() {
+  let theContext1 = {
+    Id_user: 0,
+    Pseudo: "leon",
+    token: false,
+    Id_post: 0,
+    Id_fonction: "0",
   };
 
+  const [theContext, setContext] = useState(theContext1);
+
+  // updateCartValue(2);
   return (
-    <div ref={callback}>
-      <Header></Header>
-      <ThePost {...props}></ThePost>*<Footer></Footer>
+    <div>
+      <p>Actu : {new Date().toLocaleTimeString()}</p>
+
+      <UserContext.Provider value={theContext}>
+        <Header></Header>
+        <Login2 theContext={theContext} setContext={setContext}></Login2>
+        {theContext.token ? <ThePost /> : <Accueil />}
+        <Footer></Footer>
+      </UserContext.Provider>
     </div>
   );
 }
 
-/***  
- *  <h1>{name}</h1> <ThePost user="Tarzan"></ThePost>
- * const oneUser = ReactSession.get("user");
-  let props = {
-    user: "oneUser Titi2222",
-    urlApi: "http://localhost:3100/api/posts",
-  };
+export default App;
 
-  <ThePost {...props}></ThePost>
- * 
+function Accueil() {
+  return (
+    <div>
+      <h2>Accueil</h2>Eminuit autem inter humilia supergressa iam impotentia
+      fines mediocrium delictorum nefanda Clematii cuiusdam Alexandrini nobilis
+      mors repentina; cuius socrus cum misceri sibi generum, flagrans eius
+      amore, non impetraret, ut ferebatur, per palatii pseudothyrum introducta,
+      oblato pretioso reginae monili id adsecuta est, ut ad Honoratum tum
+      comitem orientis formula missa letali omnino scelere nullo contactus idem
+      Clematius nec hiscere nec loqui permissus occideretur.;
+    </div>
+  );
+}
+
+/**
  *
- *  {oneUser ? <ThePost /> : <div>Rien</div>} 
-     
  */

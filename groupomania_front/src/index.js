@@ -1,5 +1,8 @@
+import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+//import Post3 from "./components/Post3";
+import "./styles/index.css";
 
 const container = document.getElementById("root");
 

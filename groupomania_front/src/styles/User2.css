@@ -1,6 +1,8 @@
 .pseudo_log {
-  background-color: rgb(42, 63, 46);
-  border: 2px solid black;
+  width: auto;
+  background-color: rgb(224, 232, 225);
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
   border-radius: 8px;
 
   padding: 20px;

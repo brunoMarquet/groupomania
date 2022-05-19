@@ -129,6 +129,8 @@ async function myLog(nom, psw) {
     console.log("log ?", res);
     return res;
     //document.getElementById("lesUsers").innerHTML = afficheRes();
+  } else {
+    return "erreur";
   }
 }
 async function mySign(nom, psw) {
@@ -143,6 +145,7 @@ async function mySign(nom, psw) {
   return res;
 }
 function deConnect(idUser) {
+  alert("DEBUG deConnect");
   console.log("Sign Raz ?", idUser);
   // ReactSession.remove("token");
   ReactSession.set("uu", idUser);

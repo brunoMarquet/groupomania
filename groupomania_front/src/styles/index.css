@@ -5,6 +5,8 @@ avec ...color: var(--color_bleu_1);
   --epaisseur_trait_bleu: 3px;
 } */
 body {
+  background-color: #ccc;
+  height: 100%;
   margin: 0px;
   padding: 0px;
   position: relative;
@@ -13,12 +15,15 @@ header {
   position: sticky;
   width: 100%;
   background-color: rgb(233, 221, 206);
+  padding-bottom: 20px;
+  border-bottom: 2px solid black;
   top: 0;
 }
 footer {
   position: sticky;
   width: 100%;
-  background-color: rgb(130, 116, 99);
+  border-top: 2px solid black;
+  background-color: rgb(214, 207, 199);
   bottom: 0;
 }
 
@@ -31,18 +36,18 @@ button {
   padding: 10px;
   margin: 20px;
   margin-left: 30px;
-  border-radius: 12px;
+  border-radius: 12px 12px 0px 0px;
   display: inline;
   cursor: pointer;
 }
 button:hover {
-  border-color: rgb(255, 136, 0);
+  border-color: rgb(189, 176, 162);
   background-color: rgb(235, 184, 117);
   /*opacity: 0.8;*/
 }
 
 .effacer {
-  background-color: rgb(226, 156, 75);
+  background-color: gray;
 }
 .modif {
   background-color: rgb(186, 119, 218);

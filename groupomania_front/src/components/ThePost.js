@@ -1,55 +1,39 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import Post2 from "./Post2";
 
-import FormPost2 from "./FormPost2";
+//import FormPost2 from "./FormPost2";
 
-class GetRequest extends React.Component {
-  constructor(props) {
-    super(props);
-    props.user ? console.log(props.user) : console.log("NO");
-    props.url2 ? console.log("url ", props.url2) : console.log("NO");
-    /*  const Id_user = props.user;
-    console.log("yyyyyyyyyy ", user);
- */
-    this.state = {
-      posts: [],
-    };
-  }
+function ThePost(props) {
+  props.user ? console.log(props.user) : console.log("NO");
+  props.token ? console.log("token ", props.token) : console.log("NO");
 
-  componentDidMount() {
-    fetch("http://localhost:3100/api/posts")
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    let url3 = "";
+    url3 = "http://localhost:3100/api/posts";
+    fetch(url3)
       .then((response) => response.json())
-      .then((data) => this.setState({ posts: data }));
-  }
+      .then((data) => setPosts(data));
+  }, []);
 
-  render() {
-    const { posts } = this.state;
-    return (
-      <div className="">
-        <div className="">Total Posts :{posts.length},</div>
+  return (
+    <div className="">
+      <h2>Total Posts :{posts.length} !</h2>
 
-        {posts &&
-          posts.map((post) => {
-            return (
-              <div key={post.Post_id}>
-                <hr></hr> <Post2 post={post}></Post2>
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
+      {posts &&
+        posts.map((post) => {
+          return (
+            <div key={post.Post_id}>
+              <hr></hr> <Post2 post={post}></Post2>
+            </div>
+          );
+        })}
+    </div>
+  );
 }
 
-export default GetRequest;
+export default ThePost;
 
-/**  <br />
- *  const url2 = props.urlApi;
-    console.log("yyyyyyyyyy ", url2);
- * 
- * 
-         Id_user {Id_user}
- *  {userLog ? <FormPost2 userLog={userLog} /> : <>Pas identifié</>}
- * <h3 key={user.Id_user} id={user.Id_user}>
-                  - {user.Pseudo} mail : {user.Email}
-                </h3> */
+//url3 = "http://localhost:3100/api/posts/userId/15";
+//pas ok car retours #

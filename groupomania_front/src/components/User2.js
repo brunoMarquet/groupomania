@@ -1,4 +1,4 @@
-//import React, { useState } from "react";
+import React from "react";
 import "../styles/User2.css";
 
 import * as outils from "./module/postEditer";
