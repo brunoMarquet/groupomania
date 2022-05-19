@@ -5,21 +5,28 @@ const fs = require("fs");
 //if (res.locals.userId)
 
 exports.getAllPost = async (req, res) => {
-  try {
-    const posts = await prisma.posts.findMany({
-      include: {
-        persons: { select: { Id_user: true, Pseudo: true, Email: true } },
-        comments: {
-          include: { persons: { select: { Id_user: true, Pseudo: true } } },
+  if (res.locals.isAdmin) {
+    console.log("res.locals.isAdmin");
+  }
+  if (res.locals.userId) {
+    try {
+      const posts = await prisma.posts.findMany({
+        include: {
+          persons: { select: { Id_user: true, Pseudo: true, Email: true } },
+          comments: {
+            include: { persons: { select: { Id_user: true, Pseudo: true } } },
+          },
+          likes: { include: { persons: { select: { Id_user: true } } } },
         },
-        likes: { include: { persons: { select: { Id_user: true } } } },
-      },
-    });
+      });
 
-    res.json(posts);
-  } catch (error) {
-    console.log(error);
-    res.json({ error });
+      res.json(posts);
+    } catch (error) {
+      console.log(error);
+      res.json({ error });
+    }
+  } else {
+    console.log("token oups");
   }
 };
 

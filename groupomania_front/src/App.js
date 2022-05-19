@@ -3,7 +3,7 @@ import { React, useState, createContext } from "react";
 //import Login2 from "./components/Login2";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Login2 from "./components/Login24";
+import Login2 from "./components/Login2";
 import ThePost from "./components/ThePost";
 
 export const UserContext = createContext();
@@ -31,7 +31,7 @@ function App() {
       <UserContext.Provider value={theContext}>
         <Header></Header>
         <Login2 theContext={theContext} setContext={setContext}></Login2>
-        {theContext.token ? <ThePost /> : <Accueil />}
+        {theContext.token ? <ThePost theContext={theContext} /> : <Accueil />}
         <Footer></Footer>
       </UserContext.Provider>
     </div>

@@ -27,23 +27,6 @@ function DialogApi(url, method2, headers2) {
       error;
     });
 }
-async function showPosts() {
-  //const IdUser = theUser.Id_user;
-  console.log("hi hi const IdUser = theUser.Id_user;");
-
-  let url = "http://localhost:3100/api/posts";
-  const method2 = "GET";
-  const leToken = "tata";
-  const headers2 = {
-    Authorization: `Bearer ${leToken}`,
-  };
-
-  const res = await DialogApi(url, method2, headers2);
-  if (res) {
-    return res;
-    //document.getElementById("lesUsers").innerHTML = editAllPost(res, IdUser);
-  }
-}
 
 function oneTitre(title) {
   document.title = title;
@@ -150,6 +133,19 @@ function deConnect(idUser) {
   // ReactSession.remove("token");
   ReactSession.set("uu", idUser);
   console.log("find ", ReactSession.get("uu"));
+}
+async function showPosts(leToken) {
+  let url = "http://localhost:3100/api/posts";
+  const method2 = "GET";
+  //const leToken = "tata";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
 }
 
 export {

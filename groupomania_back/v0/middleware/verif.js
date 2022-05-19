@@ -1,15 +1,23 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
+  const clefToken = "RANDOM_TOKEN_SECRET_101";
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET_101");
-    const userId = decodedToken.userId;
-    const userMail = decodedToken.userMail;
+    const decodedToken = jwt.verify(token, clefToken);
+    console.log("detoken: ", decodedToken);
 
-    res.locals.date = Date.now();
+    const userId = decodedToken.userId;
+    const userPseudo = decodedToken.userPseudo;
+    const isAdmin = decodedToken.isAdmin;
+
+    // const userMail = decodedToken.userMail;
+
     res.locals.userId = userId;
-    res.locals.mail = userMail;
+    res.locals.userPseudo = userPseudo;
+    if (isAdmin) {
+      res.locals.isAdmin = isAdmin;
+    }
     next();
   } catch {
     res.status(401).json({

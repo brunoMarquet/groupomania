@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-//const verif = require("../middleware/verif");
+const verif = require("../middleware/verif");
 //const multer = require("../middleware/multer-config");
 
 const ctrPost = require("../controllers/ctrPost");
-router.get("/", ctrPost.getAllPost);
+router.get("/", verif, ctrPost.getAllPost);
 
 router.post("/", ctrPost.createPost);
 

@@ -1,19 +1,22 @@
 import { React, useState, useEffect } from "react";
 import Post2 from "./Post2";
+import * as outils from "./module/postEditer";
 
 //import FormPost2 from "./FormPost2";
 
 function ThePost(props) {
-  props.user ? console.log(props.user) : console.log("NO");
-  props.token ? console.log("token ", props.token) : console.log("NO");
+  /* props.user ? console.log(props.user) : console.log("NO");
+  props.token ? console.log("token ", props.token) : console.log("NO"); */
 
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    let url3 = "";
-    url3 = "http://localhost:3100/api/posts";
-    fetch(url3)
-      .then((response) => response.json())
+    //let url3 = "";
+    //url3 = "http://localhost:3100/api/posts";
+    const token2 = props.theContext.token;
+    outils
+      .showPosts(token2)
+
       .then((data) => setPosts(data));
   }, []);
 

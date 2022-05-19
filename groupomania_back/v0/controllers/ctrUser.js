@@ -51,6 +51,7 @@ function writeJson(unUser, type) {
     };
   } else {
     userLight = { userPseudo: unUser.Pseudo, userId: unUser.Id_user };
+    console.log("userLight:", userLight);
     charge = {
       user: userLight,
 
@@ -157,7 +158,7 @@ const signUp = async (req, res) => {
         }
       }
     } catch (error) {
-      console.log("---uuu-- ", error);
+      //console.log("---uuu-- ", error);
       res.json({ error });
     }
   }
@@ -178,65 +179,6 @@ exports.deleteUser = async (req, res) => {
 };
 
 module.exports = { login, signUp };
-
-const login_simple = async (req, res) => {
-  let unPsw = req.body["password"];
-  let unPseudo = req.body["Pseudo"];
-  console.dir(req.body);
-
-  try {
-    const Users = await prisma.persons.findMany({
-      where: { Pseudo: unPseudo },
-    });
-    // if many ????
-    console.log("trouve ", Users);
-
-    if (Users.length === 1) {
-      const unUser = Users[0];
-      console.log(unPsw, unUser.PassWord);
-
-      bcrypt
-        .compare(unPsw, unUser.PassWord)
-        .then((valid) => {
-          console.log("Pwd valide  ", valid);
-          if (!valid) {
-            console.log("user+ Mot de passe " + unPsw + " incorrect NON ok!");
-            return res
-              .status(401)
-              .json({ message: "Mot de passe : '" + unPsw + "' incorrect !" });
-          } else {
-            //valide
-            console.log("user login  ok!");
-            let jsonToken = {};
-            if (unUser.isAdmin === 1) {
-              const tokenAdmin =
-                "$2b$10$YTlU3z2dUYomR788prmdWHZM.231WKOZNwbUL6dWN7Yr5iXZqzBLs1ca";
-              jsonToken = {
-                userPseudo: unPseudo,
-                userId: unUser.Id_user,
-                isAdmin: tokenAdmin,
-              };
-            } else
-              jsonToken == { userPseudo: unPseudo, userId: unUser.Id_user };
-
-            res.status(200).json({
-              userId: unUser.Id_user,
-              userPseudo: unPseudo,
-              token: jwt.sign(jsonToken, clefToken, {
-                expiresIn: "24h",
-              }),
-            });
-          }
-        })
-
-        .catch((error) => res.status(500).json({ error }));
-    } else {
-      res.json({ message: "Utilisateur '" + unPseudo + "' non trouvé !" });
-    }
-  } catch (error) {
-    res.json({ message: "Utilisateur non trouvé Quoi 3333!" });
-  }
-};
 
 /**verifReq
  *
@@ -307,6 +249,66 @@ function verifReq(req) {
   } else {
     console.log("les paramètres ne collent pas !(req.body problème !)");
   }
-}; */
+}; 
+const login_simple = async (req, res) => {
+  let unPsw = req.body["password"];
+  let unPseudo = req.body["Pseudo"];
+  console.dir(req.body);
+
+  try {
+    const Users = await prisma.persons.findMany({
+      where: { Pseudo: unPseudo },
+    });
+    // if many ????
+    console.log("trouve ", Users);
+
+    if (Users.length === 1) {
+      const unUser = Users[0];
+      console.log(unPsw, unUser.PassWord);
+
+      bcrypt
+        .compare(unPsw, unUser.PassWord)
+        .then((valid) => {
+          console.log("Pwd valide  ", valid);
+          if (!valid) {
+            console.log("user+ Mot de passe " + unPsw + " incorrect NON ok!");
+            return res
+              .status(401)
+              .json({ message: "Mot de passe : '" + unPsw + "' incorrect !" });
+          } else {
+            //valide
+            console.log("user login  ok!");
+            let jsonToken = {};
+            if (unUser.isAdmin === 1) {
+              const tokenAdmin =
+                "$2b$10$YTlU3z2dUYomR788prmdWHZM.231WKOZNwbUL6dWN7Yr5iXZqzBLs1ca";
+              jsonToken = {
+                userPseudo: unPseudo,
+                userId: unUser.Id_user,
+                isAdmin: tokenAdmin,
+              };
+            } else
+              jsonToken == { userPseudo: unPseudo, userId: unUser.Id_user };
+
+            res.status(200).json({
+              userId: unUser.Id_user,
+              userPseudo: unPseudo,
+              token: jwt.sign(jsonToken, clefToken, {
+                expiresIn: "24h",
+              }),
+            });
+          }
+        })
+
+        .catch((error) => res.status(500).json({ error }));
+    } else {
+      res.json({ message: "Utilisateur '" + unPseudo + "' non trouvé !" });
+    }
+  } catch (error) {
+    res.json({ message: "Utilisateur non trouvé Quoi 3333!" });
+  }
+};
+
+*/
 
 //http://localhost:3100/api/users/login
