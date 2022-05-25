@@ -1,23 +1,31 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
+
 import Post2 from "./Post2";
 import * as outils from "./module/postEditer";
+import { UserContext } from "../App";
 
 //import FormPost2 from "./FormPost2";
 
-function ThePost(props) {
+function ThePost() {
   /* props.user ? console.log(props.user) : console.log("NO");
   props.token ? console.log("token ", props.token) : console.log("NO"); */
 
   const [posts, setPosts] = useState([]);
+  const theContext = useContext(UserContext);
+  const token2 = theContext.token;
+
+  function refreshPosts() {
+    if (theContext.Id_fonction == 0) {
+      outils.showPosts(token2).then((data) => setPosts(data));
+    }
+    if (theContext.Id_fonction == "postByUser") {
+      const Id_user = theContext.Id_user;
+      outils.showPostsByUser(Id_user, token2).then((data) => setPosts(data));
+    }
+  }
 
   useEffect(() => {
-    //let url3 = "";
-    //url3 = "http://localhost:3100/api/posts";
-    const token2 = props.theContext.token;
-    outils
-      .showPosts(token2)
-
-      .then((data) => setPosts(data));
+    refreshPosts();
   }, []);
 
   return (
@@ -27,8 +35,8 @@ function ThePost(props) {
       {posts &&
         posts.map((post) => {
           return (
-            <div key={post.Post_id}>
-              <hr></hr> <Post2 post={post}></Post2>
+            <div key={post.Post_id} id={"post_G_" + post.Post_id}>
+              <hr></hr> <Post2 post={post} refreshPosts={refreshPosts}></Post2>
             </div>
           );
         })}

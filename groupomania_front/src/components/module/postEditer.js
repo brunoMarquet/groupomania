@@ -36,13 +36,8 @@ function deletePost(idpost) {
   console.log("deletePost ", idpost);
   //app.delete("/posts/:id"
   let url = "http://localhost:3100/api/posts/" + idpost;
-  const method2 = "DELETE";
+  //const method2 = "DELETE";
   const leToken = localStorage.getItem("theToken");
-  const headers2 = {
-    Authorization: `Bearer ${leToken}`,
-  };
-
-  let texte = "";
 
   fetch(url, {
     method: "DELETE",
@@ -62,18 +57,19 @@ function deletePost(idpost) {
 
   //const res = await DialogApi(url, method2, headers2);
 }
-function createPost(IdUser) {
-  const title = document.getElementById("theTitle").value;
-  const texte = document.getElementById("theText").value;
+function ModCreatePost(idUser, leToken, inputs) {
+  const Visuel2 = inputs.Post_visuel ?? "default.jpg";
 
   const envoiPost = {
-    Post_user: parseInt(IdUser),
-    Titre: title,
-    Contenu: texte,
+    Post_user: parseInt(idUser),
+    Titre: inputs.Titre,
+    Contenu: inputs.Contenu,
+    Post_visuel: Visuel2,
+
     Date_post: new Date(),
   };
 
-  const leToken = localStorage.getItem("theToken");
+  //const leToken = localStorage.getItem("theToken");
 
   let url = `http://localhost:3100/api/posts/`;
 
@@ -90,9 +86,8 @@ function createPost(IdUser) {
     .then((res) => {
       console.log(res);
       if (res.Post_id) {
-        alert(`post crée ${res.Post_id} titre...`);
+        console.log(`post crée ${res.Post_id} , titre...`);
       }
-      //return res;
     })
     .catch(function (error) {
       alert(error);
@@ -137,12 +132,39 @@ function deConnect(idUser) {
 async function showPosts(leToken) {
   let url = "http://localhost:3100/api/posts";
   const method2 = "GET";
-  //const leToken = "tata";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
+}
+async function showPostsByUser(userId, leToken) {
+  let url = "http://localhost:3100/api/posts/userId/" + userId;
+  const method2 = "GET";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
+}
+
+async function modifPosts(post_id, leToken, envoiPost) {
+  /* const envoiPost3 = {
+    Titre: "nom888888888888",
+    Contenu: "psw8999999999999999999",
+  }; */
+  let url = "http://localhost:3100/api/posts/" + post_id;
+  const method2 = "PUT";
+
   const headers2 = {
     Authorization: `Bearer ${leToken}`,
   };
 
-  const res = await DialogApi(url, method2, headers2);
+  const res = await DialogApiBody(url, method2, headers2, envoiPost);
   if (res) {
     return res;
   }
@@ -150,8 +172,10 @@ async function showPosts(leToken) {
 
 export {
   showPosts,
+  showPostsByUser,
+  modifPosts,
   deletePost,
-  createPost,
+  ModCreatePost,
   myLog,
   mySign,
   oneTitre,

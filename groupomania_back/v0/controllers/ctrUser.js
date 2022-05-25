@@ -79,7 +79,7 @@ const login = async (req, res) => {
 
     if (Users.length === 1) {
       const unUser = Users[0];
-      console.log(unPsw, unUser.PassWord);
+      // console.log(unPsw, unUser.PassWord);
 
       bcrypt
         .compare(unPsw, unUser.PassWord)

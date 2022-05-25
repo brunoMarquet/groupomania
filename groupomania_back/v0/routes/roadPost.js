@@ -7,12 +7,16 @@ const verif = require("../middleware/verif");
 const ctrPost = require("../controllers/ctrPost");
 router.get("/", verif, ctrPost.getAllPost);
 
-router.post("/", ctrPost.createPost);
+router.post("/", verif, ctrPost.createPost);
 
-router.put("/:id", ctrPost.updatePost);
+router.put("/:id", verif, ctrPost.updatePost);
 
-router.delete("/:id", ctrPost.deletePost);
+router.delete("/:id", verif, ctrPost.deletePost);
 router.get("/userId/:id", ctrPost.showPostByUser);
+
+//debug
+//router.post("/modif/:id", verif, ctrPost.updatePost);
+
 /*
 
 http://localhost:3100/api/posts/userId/

@@ -6,7 +6,7 @@ function Comments2(props) {
 
   useEffect(() => {
     setComments(props.comments);
-    console.log("modif  comments");
+    // console.log("modif  comments");
   }, [comments]);
 
   /*;

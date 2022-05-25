@@ -18,6 +18,11 @@ exports.getAllPost = async (req, res) => {
           },
           likes: { include: { persons: { select: { Id_user: true } } } },
         },
+
+        /*  orderBy: {
+          Post_user: "asc",
+        },
+        take: -1, // Reverse the list */
       });
 
       res.json(posts);
@@ -30,7 +35,7 @@ exports.getAllPost = async (req, res) => {
   }
 };
 
-exports.createPost = async (req, res, next) => {
+exports.createPost = async (req, res) => {
   // res.json({ create: "??" });
 
   try {
@@ -45,16 +50,20 @@ exports.createPost = async (req, res, next) => {
 };
 
 exports.updatePost = async (req, res) => {
+  const envoiPost3 = {
+    Titre: "nom_debug_888888888888",
+    Contenu: " debug debug debug psw8999999999999999999",
+  };
   try {
     const idPost = Number(req.params.id);
     const datas = req.body;
-    console.log("put ", datas);
+    console.log("put : ", idPost, " _  ", datas);
 
     const modifPosts = await prisma.posts.update({
       where: {
         Post_id: idPost,
       },
-      data: datas,
+      data: envoiPost3,
     });
     res.json(modifPosts);
   } catch (error) {
@@ -81,6 +90,12 @@ exports.showPostByUser = async (req, res) => {
 
     const allPosts = await prisma.posts.findMany({
       where: { Post_user: idUser },
+      include: {
+        comments: {
+          include: { persons: { select: { Id_user: true, Pseudo: true } } },
+        },
+        likes: { include: { persons: { select: { Id_user: true } } } },
+      },
     });
     res.json(allPosts);
   } catch (error) {

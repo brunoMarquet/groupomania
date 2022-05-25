@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as outils from "./module/postEditer";
+import { UserContext } from "../App";
+//import { createPost } from "../../../groupomania_back/v0/controllers/ctrPost";
 
 function PostModif2(props) {
   const post = props.post;
+  const theContext = useContext(UserContext);
 
-  const [inputs, setInputs] = useState({
-    titre: post.Titre,
-    texte: post.Contenu,
-  });
+  if (post.Post_visuel) {
+    console.log("visuel ", post.Post_visuel);
+    ///???
+  }
+  const [inputs, setInputs] = useState(
+    {
+      Titre: post.Titre,
+      Contenu: post.Contenu,
+    }
+
+    //Post_visuel=post.Post_visuel
+  );
   const [toModif, setToModif] = useState(false);
 
   const handleChange = (event) => {
@@ -15,12 +26,27 @@ function PostModif2(props) {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
+  function createPost() {
+    //alert(inputs);
 
-  const delete2 = (a) => {
+    const leToken = theContext.token;
+    const idUser = theContext.Id_user;
+
+    console.log(inputs);
+
+    outils.ModCreatePost(idUser, leToken, inputs);
+  }
+  function modif() {
+    // console.log("oooo ji", inputs);
+    const leToken = theContext.token;
+    outils.modifPosts(post.Post_id, leToken, inputs);
+    // props.refreshPosts();
+  }
+  /* const delete2 = (a) => {
     //localStorage.setItem("byUser", a);
 
     console.log(" delete id " + a);
-  };
+  }; */
   const modifPost2 = (a) => {
     //localStorage.setItem("byUser", a);
     setToModif(a);
@@ -30,12 +56,6 @@ function PostModif2(props) {
     //localStorage.setItem("byUser", a);
     setToModif(false);
     console.log(" modifPost2 id " + a);
-  };
-
-  const modifPosValid = (a) => {
-    //localStorage.setItem("byUser", a);
-
-    console.log(" modifPosValid id " + a);
   };
 
   return (
@@ -48,26 +68,27 @@ function PostModif2(props) {
             <div className="intitule">titre :</div>
             <textarea
               type="text"
-              name="titre"
+              name="Titre"
               placeholder="votre Pseudo"
-              value={inputs.titre || ""}
+              value={inputs.Titre || ""}
               onChange={handleChange}
             />
           </label>
           <label>
-            {" "}
-            <div className="intitule"> texte :</div>
+            <div className="intitule"> texte ! :</div>
             <textarea
               rows="5"
               cols="40"
               type="text"
-              name="texte"
+              name="Contenu"
               placeholder="votre Pseudo"
-              value={inputs.texte || ""}
+              value={inputs.Contenu || ""}
               onChange={handleChange}
             />
           </label>
-          <button onClick={() => modifPosValid(true)}> valider Modif</button>
+          <button onClick={() => modif()}> valider Modif Now</button>
+          <button onClick={() => createPost()}> Creer Now</button>
+
           <button onClick={() => annuler(false)}>Abandonner</button>
         </div>
       ) : (
