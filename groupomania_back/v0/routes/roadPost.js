@@ -2,15 +2,28 @@ const express = require("express");
 const router = express.Router();
 
 const verif = require("../middleware/verif");
+const multer = require("../middleware/multer2");
 //const multer = require("../middleware/multer-config");
+//??
+//const verif = require("../middleware/verif");
 
 const ctrPost = require("../controllers/ctrPost");
-router.get("/", verif, ctrPost.getAllPost);
+//router.get("/", verif, ctrPost.getAllPost);
+router.get("/:id", verif, ctrPost.getAllPostOrder);
 
-router.post("/", verif, ctrPost.createPost);
+router.put("/searchTxt/", verif, ctrPost.searchInText);
 
-router.put("/:id", verif, ctrPost.updatePost);
+router.post("/", verif, multer, ctrPost.createPost);
+//DEBUG
+router.post("/comment/", verif, ctrPost.createComment);
 
+router.post("/like/", verif, ctrPost.createLike);
+
+//debug FIN
+
+router.put("/:id", verif, multer, ctrPost.updatePost);
+//router.get("/test/:id", verif, ctrPost.findPost);
+//deletePost
 router.delete("/:id", verif, ctrPost.deletePost);
 router.get("/userId/:id", ctrPost.showPostByUser);
 

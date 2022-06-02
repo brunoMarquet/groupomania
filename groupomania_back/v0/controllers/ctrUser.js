@@ -177,8 +177,32 @@ exports.deleteUser = async (req, res) => {
     res.json({ error });
   }
 };
+const getAllUsers = async (req, res) => {
+  console.log("answer getUsers");
+  try {
+    const allUsers = await prisma.$queryRaw`SELECT * From persons `;
 
-module.exports = { login, signUp };
+    res.json(allUsers);
+  } catch (error) {
+    res.json({ error });
+  }
+};
+
+const comment2 = async (req, res) => {
+  console.log("createComment");
+  let datas = req.body;
+  try {
+    const newPost = await prisma.comments.create({
+      data: datas,
+    });
+
+    res.json(newPost);
+  } catch (error) {
+    res.json({ error });
+  }
+};
+
+module.exports = { login, signUp, getAllUsers, comment2 };
 
 /**verifReq
  *

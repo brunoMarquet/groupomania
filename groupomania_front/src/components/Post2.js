@@ -1,4 +1,4 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 import "../styles/Post2.css";
 //import { useState, createContext, useContext } from "react";
 
@@ -6,6 +6,7 @@ import "../styles/Post2.css";
 import Likes2 from "./Likes2";
 import PostModif2 from "./PostModif2";
 import Comments2 from "./Comments2";
+import PostComment from "./PostComment";
 
 import { UserContext } from "../App";
 
@@ -19,6 +20,12 @@ function Post2(props) {
   const comments2 = post.comments;
   const userPost = parseInt(post.Post_user);
   const userLog = theContext.Id_user;
+
+  const [toModif, setToModif] = useState(false);
+
+  function modifPost21() {
+    setToModif(true);
+  }
   // theContext.setContext(theContext.Id_user)
 
   //const userLog = parseInt(localStorage.getItem("userID"));
@@ -60,6 +67,21 @@ function Post2(props) {
       Pseudo: post.persons.Pseudo,
     }); */
   }
+  function ModifInterne() {
+    /*  const [inputs, setInputs] = useState({});
+    const fileInput = React.createRef();
+    const handleChange = (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
+      setInputs((values) => ({ ...values, [name]: value }));
+    }; */
+    return (
+      <>
+        <h4>coucou {toModif}</h4>
+        modifier TItre : <p>{post.Titre}</p>,Contenu : {post.Contenu},
+      </>
+    );
+  }
 
   return (
     <article className="unPost" id={"post_" + post.Post_id}>
@@ -82,27 +104,66 @@ function Post2(props) {
         <>
           <h2>
             écrit par {post.persons.Pseudo}
-            <button onClick={() => myPosts()}>ses posts!</button>
+            <button onClick={() => myPosts()}>Ses posts !</button>
           </h2>
         </>
       ) : (
         <></>
       )}
-      {userPost === userLog ? <PostModif2 post={post} /> : <></>}
+      {userPost === userLog ? (
+        <>
+          <button onClick={() => modifPost21()}> MODIFIER ?</button>
+          <hr></hr>
+          <PostModif2 post={post} />
+          {toModif === true ? <ModifInterne /> : <></>}
+        </>
+      ) : (
+        <></>
+      )}
+      <PostComment idPost={post.Post_id} />
       {comments2.length > 0 && (
         <div>
-          <h3>You have {comments2.length} commentaires.</h3>
+          <h3>il y a {comments2.length} commentaires.</h3>
 
           <Comments2 comments={comments2}></Comments2>
         </div>
       )}
-      <Likes2 likes={post.likes} />
+      <Likes2 likes={post.likes} idPost={post.Post_id} />
     </article>
   );
 }
 export default Post2;
 
 /** 
+ * 
+ * <label>
+          <div className="intitule">titre :</div>
+          <textarea
+            type="text"
+            name="Titre"
+            placeholder="votre Pseudo"
+            value={inputs.Titre || ""}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          <div className="intitule"> texte ! :</div>
+          <textarea
+            rows="5"
+            cols="40"
+            type="text"
+            name="Contenu"
+            placeholder="votre Pseudo"
+            value={inputs.Contenu || ""}
+            onChange={handleChange}
+          />{" "}
+        </label>
+        <br></br>
+        <label>
+          Envoyer un fichier: ou garder le {inputs.Post_visuel} ....<br></br>
+          <input type="file" ref={fileInput} />
+        </label>
+ * _____________
  *  <p>PIPO</p>
           <PostModif2 post={post} refreshPosts={props.refreshPosts} />
  * 

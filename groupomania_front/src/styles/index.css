@@ -31,6 +31,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.icon-test1 {
+  background-image: url("../assets/icon_left.svg");
+  color: red;
+}
+.headerIcon {
+  stroke: black;
+  fill: red;
+  background-color: gray;
+  height: 50px;
+  width: 100%;
+  padding: 10px;
+}
+.headerIcon svg path {
+  fill: green !important;
+}
 
 button {
   padding: 10px;
@@ -41,7 +56,6 @@ button {
   cursor: pointer;
 }
 button:hover {
-  border-color: rgb(189, 176, 162);
   background-color: rgb(235, 184, 117);
   /*opacity: 0.8;*/
 }

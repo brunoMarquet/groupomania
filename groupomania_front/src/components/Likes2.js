@@ -1,32 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../App";
+import * as outils from "./module/postEditer";
 
 function Likes2(props) {
   const likes = props.likes;
+  const idPost = props.idPost;
 
-  // likes.User_like;
-  const userLog = localStorage.getItem("userID");
-  //console.log(likes);
-  if (likes.length !== 0) {
-    //connerie
-    // const userLike = likes.User_like;
+  const theContext = useContext(UserContext);
+  const leToken = theContext.token;
+  const idUser = theContext.Id_user;
+  function youStopLove() {
+    outils.deleteLike(leToken, idPost);
   }
-  // + " : " + userLog);
 
-  //const alterOk = userLike === userLog ? true : false;
+  function youLove() {
+    let dt = new Date();
+    dt.setHours(dt.getHours() + 2);
+    const dataLike = {
+      User_like: idUser,
+      Post_like: idPost,
+      Date_like: dt,
+    };
 
-  //console.log("likes55", likes.length);
+    outils.addLike(leToken, dataLike);
+  }
 
   let depart = likes.length;
 
-  const [count, setCount] = useState(depart);
+  const [weLike] = useState(depart);
   return (
     <>
-      <h3>il y a {count} likes</h3>
+      <h3>il y a {weLike} likes</h3>
+      <i className="far fa-thumbs-up"></i>
+      <i className="fas fa-thumbs-up"></i>
 
-      <button onClick={() => setCount(count + 1)}>j'aime</button>
-      <button onClick={() => setCount(count - 1)}>j'aime pas</button>
+      <button onClick={() => youLove()}>j `&apos;aime</button>
+
+      <hr></hr>
+      <i className="far fa-thumbs-down"></i>
+      <button onClick={() => youStopLove()}>je n `&apos;aime plus</button>
     </>
   );
 }
 
 export default Likes2;
+
+/**
+ * <button onClick={() => setCount(count + 1)}>j'aime</button>
+      <button onClick={() => setCount(count - 1)}>je n'aime pluss</button>
+ */

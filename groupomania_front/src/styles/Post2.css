@@ -29,21 +29,22 @@ article .contenu {
 }
 
 .modifier_post {
-  border: 2px solid black;
-  border-radius: 8px;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  border-radius: 20px;
 
-  padding: 20px;
-  margin: 20px;
+  padding: 10px;
+  margin: 10px;
 
   font-size: 20px;
 }
 
 .intitule {
-  color: brown;
+  color: rgb(219, 18, 18);
   background-color: rgb(151, 153, 159);
-  border: 2px solid black;
+  border-top: px solid black;
   width: 100px;
-  padding: 10px;
+  padding: 6px;
   font-size: 20px;
 }
 
@@ -63,9 +64,9 @@ article .contenu {
   width: 80%;
   height: auto;
   padding: 10px;
-  font-size: 20px;
+  font-size: 18px;
 
-  line-height: 22px;
+  line-height: 20px;
 }
 .commentaire {
   border-top: 1px solid black;

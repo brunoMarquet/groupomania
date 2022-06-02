@@ -12,11 +12,36 @@ const Footer = () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
+  function basFunction() {
+    document.body.scrollIntoView(false);
+    // document.documentElement.scrollBottom = 0;
+  }
 
   return (
     <footer>
-      <MouseLoc></MouseLoc>
       <button onClick={() => topFunction()}> haut de page</button>
+      <button onClick={() => basFunction()}> bas de page</button>
+
+      <i className="fas fa-map-marker-alt"> </i>
+      <i className="fas fa-search"></i>
+      <i className="fas fa-user"></i>
+      <i className="fas fa-mailbox"></i>
+      <i className="fas fa-edit"></i>
+      <i className="fas fa-user-alt-slash"></i>
+      <i className="fas fa-list"></i>
+      <i className="fas fa-address-card"></i>
+      <i className="fas fa-user-edit"></i>
+      <i className="fas fa-comment"></i>
+      <i className="far fa-comment"></i>
+      <i className="fas fa-user"></i>
+      <i className="far fa-user"></i>
+      <i className="fas fa-user-lock"></i>
+      <i className="fas fa-save"></i>
+      <i className="far fa-save"></i>
+      <i className="fas fa-power-off"></i>
+      <i className="fas fa-user-secret"></i>
+      <i className="far fa-envelope"></i>
+      <MouseLoc></MouseLoc>
     </footer>
   );
 };

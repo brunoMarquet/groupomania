@@ -1,5 +1,6 @@
 const multer = require("multer");
 const folderPict = "imagesFolder";
+//console.log("here multer");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -15,7 +16,10 @@ const storage = multer.diskStorage({
 
   filename: (req, file, callback) => {
     let name = file.originalname.split(" ").join("_");
+    //console.log("nn", name);
     name = name.split(".").slice(0, -1).join("_") + "_" + Date.now();
+    name = "truc_" + Date.now();
+
     /**
      * alternatives ou test
     

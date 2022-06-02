@@ -8,7 +8,7 @@ function PostModif2(props) {
   const theContext = useContext(UserContext);
 
   if (post.Post_visuel) {
-    console.log("visuel ", post.Post_visuel);
+    // console.log("visuel ", post.Post_visuel);
     ///???
   }
   const [inputs, setInputs] = useState(
@@ -37,9 +37,10 @@ function PostModif2(props) {
     outils.ModCreatePost(idUser, leToken, inputs);
   }
   function modif() {
-    // console.log("oooo ji", inputs);
     const leToken = theContext.token;
-    outils.modifPosts(post.Post_id, leToken, inputs);
+    let envoi = inputs;
+    envoi.Post_user = post.Post_user;
+    outils.modifPosts(post.Post_id, leToken, envoi);
     // props.refreshPosts();
   }
   /* const delete2 = (a) => {
@@ -52,10 +53,10 @@ function PostModif2(props) {
     setToModif(a);
     console.log(" modifPost2 id " + a);
   };
-  const annuler = (a) => {
+  const annuler = () => {
     //localStorage.setItem("byUser", a);
     setToModif(false);
-    console.log(" modifPost2 id " + a);
+    // console.log(" modifPost2 id " + a);
   };
 
   return (
@@ -89,19 +90,25 @@ function PostModif2(props) {
           <button onClick={() => modif()}> valider Modif Now</button>
           <button onClick={() => createPost()}> Creer Now</button>
 
-          <button onClick={() => annuler(false)}>Abandonner</button>
+          <button onClick={() => annuler()}>Abandonner</button>
         </div>
       ) : (
         <div>
-          <button onClick={() => outils.deletePost(post.Post_id)}>
+          <button
+            onClick={() => outils.deletePost(theContext.token, post.Post_id)}
+          >
             effacer
           </button>
+          <button>Test Trouver</button>
           <button onClick={() => modifPost2(post.Post_id)}>modifier</button>
         </div>
       )}
     </div>
   );
-  /*  <p>son email : {user.Email} </p>
+  /*     onClick={() => outils.findPost(theContext.token, post.Post_id)}
+  
+  
+  <p>son email : {user.Email} </p>
 
       <button onClick={(event) => shoot2(user.Id_user)}>
         {user.Pseudo} ___Take the shot!

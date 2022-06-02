@@ -5,12 +5,16 @@ import "../styles/login.css";
 import * as outils from "./module/postEditer";
 import { ReactSession } from "react-client-session";
 import { UserContext } from "../App";
+//import { UserContext } from "../App";
 
 ReactSession.setStoreType("localStorage");
 
 function Login2(props) {
-  // const theContext = useContext(UserContext);
-  const [inputs, setInputs] = useState({});
+  const theContext = useContext(UserContext);
+  const [inputs, setInputs] = useState({
+    username: "1001",
+    pwd: "1001",
+  });
   const [reponse, setReponse] = useState({});
   // const token = theContext.token;
   //const Id_user = theContext.Id_user;
@@ -102,6 +106,10 @@ function Login2(props) {
           Admin
           <button onClick={() => raz2(user.Id_user)}>se déconnecter!</button>
           <button onClick={() => myPosts()}>mes posts!</button>
+          <button onClick={() => outils.findUser(theContext.token)}>
+            test 30mai !
+          </button>
+          theContext.token
         </div>
       );
     } else {
@@ -176,11 +184,12 @@ function Login2(props) {
               onChange={handleChange}
             />
           </label>
-          <button onClick={() => sign2()} value=" ">
-            s inscrire
+
+          <button className="bt_log" onClick={() => sign2()} value=" ">
+            INSCRIPTION
           </button>
-          <button onClick={() => theLog()} value=" ">
-            se loger
+          <button className="bt_log" onClick={() => theLog()} value=" ">
+            CONNECTION
           </button>
 
           <button onClick={() => raz2()} value=" ">

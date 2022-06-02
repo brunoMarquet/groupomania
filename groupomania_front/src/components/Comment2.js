@@ -2,14 +2,17 @@ import React, { useState } from "react";
 
 function Comment2(props) {
   const comment = props.comment;
-  const userComment = comment.User_com;
-  const userLog = localStorage.getItem("userID");
+  /*  const userComment = comment.User_com;
+
+  const userLog = localStorage.getItem("userID"); */
 
   const [inputs, setInputs] = useState({
     Comment: comment.Text_com,
   });
 
-  const alterOk = userComment == userLog ? true : false;
+  const alterOk = true; //userComment == userLog ? true : false;
+  //console.log(comment.User_com, " _=?__", comment.Comment2Text_com);
+
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -26,7 +29,7 @@ function Comment2(props) {
     <div className="commentaire">
       {alterOk ? (
         <>
-          <p>vous pouvez modifier votre message</p>
+          <p>vous pouvez modifier votre Commentaire</p>
           <label>
             <div className="intitule">Commentaire :</div>
             <textarea
@@ -41,11 +44,16 @@ function Comment2(props) {
         </>
       ) : (
         <>
-          <div className="commentaire_txt">comment : {comment.Text_com}</div>
+          <div className="commentaire_txt">
+            commentaire : {comment.Text_com}
+          </div>
           <p>Publié par : {comment.persons.Pseudo}</p>
+          <p>{comment.Date_com}</p>
         </>
       )}
     </div>
   );
 }
 export default Comment2;
+
+//  <p>{userLog === comment.Id_user ? <>YES</> : <></>} </p>

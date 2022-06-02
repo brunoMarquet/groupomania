@@ -39,15 +39,20 @@ app.use(express.json());
 const userRoutes = require("./routes/roadUser");
 
 const postRoutes = require("./routes/roadPost");
+const commentRoutes = require("./routes/roadComment"); //???
+const likeRoutes = require("./routes/roadLike");
 
 app.use("/api/posts", postRoutes);
 
 app.use("/api/users", userRoutes);
+app.use("/api/comments", commentRoutes); // ???
+app.use("/api/likes", likeRoutes);
 
 app.use("/images", express.static(path.join(__dirname, folderPict)));
 
 //comments/userId
 app.get(`/api/comments/userId/:id`, async (req, res) => {
+  console.log(`/api/comments/userId/:id`);
   try {
     const idUser = Number(req.params.id);
 
