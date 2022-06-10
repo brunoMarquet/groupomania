@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+  >
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>>Groupomania_v0</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <form id="formElem">
+      <input type="text" name="firstName" value="John" />
+      <input type="text" name="surname" value="Smith" />
+      Picture: <input type="file" name="picture" accept="image/*" />
+      <input type="submit" />
+    </form>
+
+    <script>
+      formElem.onsubmit = async (e) => {
+        e.preventDefault();
+        let url = `http://localhost:3100/api/posts/test`;
+
+        const method2 = "POST";
+        const headers2 = {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${leToken}`,
+        };
+
+        let response = await fetch("http://localhost:3100/api/posts/test", {
+          method: "POST",
+          headers: headers2,
+          body: new FormData(formElem),
+        });
+
+        let result = await response.json();
+
+        alert(result.message);
+      };
+    </script>
+  </body>
+  <script src="main.js"></script>
+  <script src="editer.js"></script>
+  <script src="datas.js"></script>
+</html>

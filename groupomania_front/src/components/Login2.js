@@ -11,12 +11,14 @@ ReactSession.setStoreType("localStorage");
 
 function Login2(props) {
   const theContext = useContext(UserContext);
+  //??
   const [inputs, setInputs] = useState({
     username: "1001",
     pwd: "1001",
   });
   const [reponse, setReponse] = useState({});
-  // const token = theContext.token;
+  const token = theContext.token;
+
   //const Id_user = theContext.Id_user;
 
   //const
@@ -100,16 +102,13 @@ function Login2(props) {
 
     if (user.isAdmin) {
       // console.log(user, "AA", token);
+      // <p>{console.log(token}</p>;
 
       return (
         <div>
-          Admin
+          Admin : {token}
           <button onClick={() => raz2(user.Id_user)}>se déconnecter!</button>
           <button onClick={() => myPosts()}>mes posts!</button>
-          <button onClick={() => outils.findUser(theContext.token)}>
-            test 30mai !
-          </button>
-          theContext.token
         </div>
       );
     } else {
@@ -205,6 +204,11 @@ function Login2(props) {
 export default Login2;
 
 /**
+ * 
+ * <button onClick={() => outils.findUser(theContext.token)}>
+            test 30mai !
+          </button>
+          theContext.token
  *  {user ? (
         <Bonjour />
       ) : ()

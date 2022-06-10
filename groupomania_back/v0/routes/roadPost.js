@@ -14,10 +14,12 @@ router.get("/:id", verif, ctrPost.getAllPostOrder);
 router.put("/searchTxt/", verif, ctrPost.searchInText);
 
 router.post("/", verif, multer, ctrPost.createPost);
-//DEBUG
-router.post("/comment/", verif, ctrPost.createComment);
 
-router.post("/like/", verif, ctrPost.createLike);
+router.post("/choix/", verif, ctrPost.getAllPostChoix);
+//router.post("/test/", verif,ctrPost.testPost);
+router.post("/test/", ctrPost.testPost);
+
+//DEBUG
 
 //debug FIN
 

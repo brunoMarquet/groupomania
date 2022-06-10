@@ -1,10 +1,15 @@
 /* variables
 avec ...color: var(--color_bleu_1);
+ border: var(--epaisseur_trait_bleu) solid transparent;
+} */
 :root {
   --color_bleu_1: #0065fc;
   --epaisseur_trait_bleu: 3px;
-} */
+}
+
 body {
+  font-family: "Lato", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   background-color: #ccc;
   height: 100%;
   margin: 0px;
@@ -31,10 +36,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.icon-test1 {
+/* .icon-test1 {
   background-image: url("../assets/icon_left.svg");
   color: red;
-}
+} */
 .headerIcon {
   stroke: black;
   fill: red;
@@ -48,10 +53,10 @@ code {
 }
 
 button {
-  padding: 10px;
+  /*  padding: 10px;
   margin: 20px;
   margin-left: 30px;
-  border-radius: 12px 12px 0px 0px;
+  border-radius: 12px 12px 0px 0px; */
   display: inline;
   cursor: pointer;
 }

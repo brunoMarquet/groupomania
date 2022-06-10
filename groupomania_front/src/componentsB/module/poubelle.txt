@@ -1,0 +1,162 @@
+export async function deletePost(leToken, idpost) {
+  //async function deletePost(leToken, idpost) {
+  let url = "http://localhost:3100/api/posts/" + idpost;
+  const method2 = "DELETE";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
+}
+// outils.write(leToken,idPost, idUser);
+export async function deleteLike(leToken, idpost) {
+  //console.log(leToken, idpost);
+  let url = "http://localhost:3100/api/likes/" + idpost;
+  const method2 = "DELETE";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
+}
+export async function deleteComment(leToken, idComment) {
+  console.log("del", idComment);
+
+  let url = "http://localhost:3100/api/comments/" + idComment;
+  const method2 = "DELETE";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
+}
+export const addLike = async (leToken, envoiLike) => {
+  //async function addLike(leToken, envoiLike) {
+  //console.log(envoiLike);
+
+  // let url = `http://localhost:3100/api/posts/like`;
+  let url = `http://localhost:3100/api/likes`;
+
+  const method2 = "POST";
+  const headers2 = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${leToken}`,
+  };
+
+  const res = await DialogApiBody(url, method2, headers2, envoiLike);
+  if (res) {
+    return res;
+  }
+};
+export const showPostsByUser = async (userId, leToken) => {
+  //async function showPostsByUser(userId, leToken) {
+  let url = "http://localhost:3100/api/posts/userId/" + userId;
+  const method2 = "GET";
+  const headers2 = {
+    //"Content-Type": "application/json",
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    return res;
+  }
+}
+async function searchPostTxt(leToken, envoiPost) {
+  // a revoir
+  let url = "http://localhost:3100/api/posts/searchTxt/";
+  const method2 = "PUT";
+  const headers2 = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApiBody(url, method2, headers2, envoiPost);
+  if (res) {
+    console.log(res);
+    return res;
+  }
+};
+
+/**bof */
+function oneTitre(title) {
+  document.title = title;
+}
+function sqlToJsDate(sqlDate) {
+  //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
+  var sqlDateArr1 = sqlDate.split("-");
+  //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
+  var sYear = sqlDateArr1[0];
+  var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
+  var sqlDateArr2 = sqlDateArr1[2].split(" ");
+  //format of sqlDateArr2[] = ['dd', 'hh:mm:ss.ms']
+  var sDay = sqlDateArr2[0];
+  var sqlDateArr3 = sqlDateArr2[1].split(":");
+  //format of sqlDateArr3[] = ['hh','mm','ss.ms']
+  var sHour = sqlDateArr3[0];
+  var sMinute = sqlDateArr3[1];
+  var sqlDateArr4 = sqlDateArr3[2].split(".");
+  //format of sqlDateArr4[] = ['ss','ms']
+  var sSecond = sqlDateArr4[0];
+  var sMillisecond = sqlDateArr4[1];
+
+  const d = new Date(
+    sYear,
+    sMonth,
+    sDay,
+    sHour,
+    sMinute,
+    sSecond,
+    sMillisecond
+  );
+  return d.getDate(), "_==", d.getDay(), "==", d.getHours();
+}
+
+async function findUser(leToken) {
+  alert(leToken);
+  /* //pas ope !
+  let url = "http://localhost:3100/api/user/tous/";
+  const method2 = "get";
+  const headers2 = {
+    Authorization: `Bearer ${leToken}`,
+  };
+  const res = await DialogApi(url, method2, headers2);
+  if (res) {
+    console.log(res);
+    return res;
+  }*/
+}
+//
+
+/**
+   *  mySign,
+   POur create Comment
+   * const dataComment2 = {
+    User_com: 21,
+    Post_com: 104,
+    Text_com: "1123uuuuuuuuuu",
+    Date_com: new Date(),
+    Visuel_com: "",
+  };
+   * 
+  25 let datas = req.body;
+  26 console.log("createComment", datas);
+  27 try {
+→ 28   const newPost = await prisma.comments.create({
+         data: {
+           User_com: 21,
+           Post_com: 104,
+           Text_com: '1123uuuuuuuuuu',
+       +   Visuel_com: String,
+       ?   Id_com?: Int,
+       ?   Date_com?: DateTime | null,
+       ?   published?: Boolean | null
+         }
+       })
+   */
+
+//

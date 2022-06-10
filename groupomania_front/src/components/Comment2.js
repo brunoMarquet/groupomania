@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../App";
+import * as outils from "./module/postEditer";
 
 function Comment2(props) {
   const comment = props.comment;
+  const lePseudo = comment.pseudo;
+
+  //setComments={setComments}
+  const theContext = useContext(UserContext);
+  const leToken = theContext.token;
+  const idUser = theContext.Id_user;
   /*  const userComment = comment.User_com;
 
-  const userLog = localStorage.getItem("userID"); */
+   localStorage.getItem("userID"); */
 
   const [inputs, setInputs] = useState({
     Comment: comment.Text_com,
   });
+  function modifCommentRaz() {}
+  function deleteComment2() {
+    outils.deleteComment(leToken, comment.Id_com);
+  }
 
-  const alterOk = true; //userComment == userLog ? true : false;
-  //console.log(comment.User_com, " _=?__", comment.Comment2Text_com);
+  //
+
+  let alterOk = comment.User_com == idUser ? true : false;
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -19,14 +32,22 @@ function Comment2(props) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const modifCommentValid = (byUser) => {
-    console.log(" modifCommentValid id " + byUser);
-  };
+  const modifCommentValid = () => {
+    const charge = {
+      User_com: idUser,
+      Id_com: comment.Id_com,
+      // Date_com: dt,
+      Text_com: inputs.Comment + " modifié le " + new Date(),
+    };
 
-  const postBy = comment.persons.Id_user;
+    outils.modifComment(comment.Id_com, leToken, charge);
+  };
 
   return (
     <div className="commentaire">
+      <p>
+        posté le {comment.Date_com} par {lePseudo}, (id : {comment.User_com})
+      </p>
       {alterOk ? (
         <>
           <p>vous pouvez modifier votre Commentaire</p>
@@ -39,16 +60,18 @@ function Comment2(props) {
               onChange={handleChange}
             />
           </label>
-
-          <button onClick={() => modifCommentValid(postBy)}>faire Modif</button>
+          <i className="fas fa-save"></i>
+          <button onClick={() => modifCommentValid()}> Modifier</button>
+          <button onClick={() => modifCommentRaz()}>Annuler</button>
+          <i className="fas fa-trash"></i>
+          <button onClick={() => deleteComment2()}>effacer</button>
         </>
       ) : (
         <>
           <div className="commentaire_txt">
             commentaire : {comment.Text_com}
           </div>
-          <p>Publié par : {comment.persons.Pseudo}</p>
-          <p>{comment.Date_com}</p>
+          <p>Publié par : {lePseudo}</p>
         </>
       )}
     </div>

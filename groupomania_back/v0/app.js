@@ -5,6 +5,7 @@ http://localhost:3100/users
 const express = require("express");
 
 const path = require("path");
+//const fileUpload = require("express-fileupload");
 
 console.log("start : ", new Date().toLocaleTimeString());
 
@@ -39,12 +40,14 @@ app.use(express.json());
 const userRoutes = require("./routes/roadUser");
 
 const postRoutes = require("./routes/roadPost");
-const commentRoutes = require("./routes/roadComment"); //???
-const likeRoutes = require("./routes/roadLike");
+const commentRoutes = require("./routes/routeComment"); //???
+const likeRoutes = require("./routes/routeLike");
 
 app.use("/api/posts", postRoutes);
 
 app.use("/api/users", userRoutes);
+
+////
 app.use("/api/comments", commentRoutes); // ???
 app.use("/api/likes", likeRoutes);
 
@@ -75,6 +78,12 @@ app.get("/api/users", async (req, res) => {
     console.log(error);
     res.json({ error });
   }
+});
+
+app.post("/api/testBody/", async (req, res) => {
+  console.log("testRqBody_app_ ", req.body);
+
+  res.json({ coucou_app: "hello" });
 });
 
 app.get(`/users/:id`, async (req, res) => {

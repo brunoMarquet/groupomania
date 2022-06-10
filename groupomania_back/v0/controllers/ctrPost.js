@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const fs = require("fs");
+const maxPostAff = 5;
 //
 //gestion des "post":
 const includeFull = {
@@ -8,9 +9,10 @@ const includeFull = {
   comments: {
     include: { persons: { select: { Id_user: true, Pseudo: true } } },
   },
-  // likes: { include: { User_like: true } },
-  likes: { include: { persons: { select: { Id_user: true } } } },
+  likes: { select: { User_like: true } },
+  // likes: { include: { User_like: true } },//NAZ
 };
+
 const includeLight = {
   comments: {
     include: { persons: { select: { Id_user: true, Pseudo: true } } },
@@ -19,61 +21,53 @@ const includeLight = {
 };
 
 //const xss = require("xss");
-//if (res.locals.userId)
 
-/**DEBUGGGGGG */
-exports.createComment = async (req, res) => {
-  let datas = req.body;
-  console.log("createComment", datas);
-  try {
-    const newPost = await prisma.comments.create({
-      data: datas,
-    });
-    console.log("NN", newPost);
+//getAllPostChoix
+exports.getAllPostChoix2 = async (req, res) => {
+  const datas = req.body;
 
-    res.json(newPost);
-  } catch (error) {
-    console.log(error);
-    res.json({ error });
-  }
+  console.log("oups _getAllPostChoix2_ ", datas);
+  res.json({ test: "error" });
 };
 
-exports.createLike = async (req, res) => {
-  let datas = req.body;
-  console.log("createLike", datas);
+exports.getAllPostChoix = async (req, res) => {
+  // console.log("getAllPostChoix_ki ? ", res.locals.userId);
+  //{ord: "desc", number: 12, matter: "Date_post"}
+  console.log("******************************");
 
-  try {
-    const newLike = await prisma.likes.create({
-      data: datas,
-    });
-    res.json(newLike);
-  } catch (error) {
-    res.json({ error });
-  }
-};
+  const datas = req.body;
+  const order = datas.ord;
+  // const testBB = false;
+  const maxPostAff = parseInt(datas.nbrMax);
+  const tri = datas.matter;
+  //console.log("******************************");
+  //console.log("oups", datas);
 
-exports.createLike_boucle = async (req, res) => {
-  let datas = req.body;
-  console.log("createLike", datas);
+  if (res.locals.userId) {
+    try {
+      const posts = await prisma.posts.findMany({
+        take: maxPostAff,
 
-  try {
-    const findLike = await prisma.likes.findMany({
-      where: {
-        Post_like: datas.idPost,
-        User_like: datas.idUser,
-      },
-    });
-    console.log(findLike);
-    if (findLike.length === 0) {
-      const newLike = await prisma.likes.create({
-        data: datas,
+        include: includeFull,
+        orderBy: {
+          [tri]: order,
+        },
       });
-      res.json(newLike);
+
+      res.json(posts);
+    } catch (error) {
+      console.log(error);
+      res.json({ error });
     }
-  } catch (error) {
-    res.json({ error });
+  } else {
+    console.log("token oups");
   }
 };
+/*
+ ********************************
+ */
+
+///
 
 exports.getAllPostOrder = async (req, res) => {
   // const tri3 = "Date_post";
@@ -84,15 +78,17 @@ exports.getAllPostOrder = async (req, res) => {
   //console.log("ki ? ", res.locals.userId);
 
   if (res.locals.isAdmin) {
-    console.log("res admin Yes  ", res.locals.isAdmin);
+    // console.log("res admin Yes  ", res.locals.isAdmin);
   }
   if (res.locals.userId) {
+    const order = "desc";
     try {
       const posts = await prisma.posts.findMany({
+        take: maxPostAff,
         include: includeFull,
         orderBy: {
           //[tri]: "desc",
-          [tri]: "asc",
+          [tri]: order,
         },
       });
 
@@ -110,6 +106,7 @@ exports.createPost = async (req, res) => {
   // res.json({ create: "??" });
   // const ObjectFile = JSON.parse(req.body);
   // console.log("ici ", ObjectFile);
+  console.log("", req);
   let datas = req.body;
   if (req.file) {
     console.log(req.file);
@@ -136,10 +133,10 @@ exports.updatePost = async (req, res) => {
   const datas = req.body;
 
   if (parseInt(res.locals.userId) === parseInt(datas.Post_user)) {
-    console.log("verif ok YESSSS  ");
+    console.log("verif ok updatePost  ");
 
     try {
-      const modifPosts = await prisma.posts.updateMany({
+      const modifPosts = await prisma.posts.update({
         where: {
           Post_id: idPost,
           Post_user: idUser,
@@ -216,7 +213,22 @@ exports.searchInText = async (req, res) => {
   }
 };
 
+exports.testPost = async (req, res) => {
+  console.log("testRq_file", req.files);
+  console.log("**********************");
+  console.log("testRq_file", req.body);
+  console.log("**********************");
+  console.log("url", req.originalUrl);
+
+  res.json({ coucou: "hello" });
+};
+
 /**
+ * exports.testRqBody = async (req, res) => {
+ console.log("testRqBody", req.body);
+ res.json({ coucou: "hello" });
+};
+ * 
  * reponse
  * createComment {
   User_com: 21,

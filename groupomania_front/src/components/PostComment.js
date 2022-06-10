@@ -5,7 +5,7 @@ import * as outils from "./module/postEditer";
 //import { createPost } from "../../../groupomania_back/v0/controllers/ctrPost";
 
 function PostComment(props) {
-  const idPost = props.idPost;
+  const postId = props.postId; //faux
   const [inputs, setInputs] = useState({});
 
   const [toModif, setToModif] = useState(false);
@@ -17,15 +17,15 @@ function PostComment(props) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
   function createComment() {
-    //alert(inputs);
     let dt = new Date();
+    //alert(dt);
     dt.setHours(dt.getHours() + 2);
 
     const leToken = theContext.token;
     const idUser = theContext.Id_user;
     const dataComment = {
       User_com: idUser,
-      Post_com: idPost,
+      Post_com: postId,
       Text_com: inputs.Text_com,
       Date_com: dt,
       Visuel_com: "",
@@ -33,7 +33,14 @@ function PostComment(props) {
 
     console.log("dataComment : ", dataComment);
 
-    outils.writeComment(leToken, dataComment);
+    outils
+      .writeComment(leToken, dataComment)
+      .then((retour) => {
+        props.addComment(retour);
+        //console.log("User_like", retour.User_like);
+        //setTabLike((tabLike) => [...tabLike, retour.User_like]);
+      })
+      .catch((error) => console.log(error));
   }
 
   const annuler = (a) => {

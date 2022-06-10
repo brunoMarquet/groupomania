@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./AppB";
 //import Post3 from "./components/Post3";
 import "./styles/index.css";
 

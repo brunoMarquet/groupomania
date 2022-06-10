@@ -5,8 +5,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login2 from "./components/Login2";
 import ThePost from "./components/ThePost";
-
-//import Po
+//import Test16 from "./test/Test16";
+//import TestArray2 from "./test/TestArray2";
+//test/Test14";
 
 export const UserContext = createContext();
 
@@ -53,6 +54,7 @@ function App() {
 
       <UserContext.Provider value={theContext}>
         <Header></Header>
+
         <Login2 theContext={theContext} setContext={setContext} />
         <TheMain />
         <Footer></Footer>
@@ -66,7 +68,7 @@ export default App;
 function Accueil() {
   return (
     <div>
-      <h2>Accueil!!! Vous n avez pas le TOKEN </h2>
+      <h2>Accueil !!! Vous n`&lsquo;` avez pas le TOKEN </h2>
       <h3>Lorem</h3>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt magni
       sint minus, ipsam similique consectetur officiis numquam culpa a excepturi
@@ -111,6 +113,23 @@ function Erreur() {
           <Accueil />
         )}
  *
+
+         function TheMain() {
+    if (theContext.token) {
+      switch (theContext.Id_fonction) {
+        case 0:
+          return <ThePost />;
+        case "postByUser":
+          return <ThePost />;
+
+        default:
+          console.log(`Sorry, we are out of ${theContext.Id_fonction}.`);
+          return <Erreur />;
+      }
+    } else {
+      return <Accueil />;
+    }
+  }
 
          
  */

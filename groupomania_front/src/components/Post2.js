@@ -1,12 +1,12 @@
 import { React, useContext, useState } from "react";
 import "../styles/Post2.css";
+//import * as outils from "./module/postEditer";
 //import { useState, createContext, useContext } from "react";
 
 //import Comment2 from "./Comment2";
 import Likes2 from "./Likes2";
 import PostModif2 from "./PostModif2";
 import Comments2 from "./Comments2";
-import PostComment from "./PostComment";
 
 import { UserContext } from "../App";
 
@@ -22,10 +22,20 @@ function Post2(props) {
   const userLog = theContext.Id_user;
 
   const [toModif, setToModif] = useState(false);
-
+  // console.log(sumUpLike(post.likes));
   function modifPost21() {
     setToModif(true);
   }
+  //const like3 = sumUpLike(post.likes);
+
+  function sumUpLike(likes) {
+    let like3 = [];
+    for (const like of likes) {
+      like3.push(like.User_like);
+    }
+    return like3;
+  }
+
   // theContext.setContext(theContext.Id_user)
 
   //const userLog = parseInt(localStorage.getItem("userID"));
@@ -68,16 +78,9 @@ function Post2(props) {
     }); */
   }
   function ModifInterne() {
-    /*  const [inputs, setInputs] = useState({});
-    const fileInput = React.createRef();
-    const handleChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-      setInputs((values) => ({ ...values, [name]: value }));
-    }; */
     return (
       <>
-        <h4>coucou {toModif}</h4>
+        <h1>coucou BBBBBBBBBBBBBBBB {toModif}</h1>
         modifier TItre : <p>{post.Titre}</p>,Contenu : {post.Contenu},
       </>
     );
@@ -86,6 +89,9 @@ function Post2(props) {
   return (
     <article className="unPost" id={"post_" + post.Post_id}>
       <h2 id={"titre_" + post.Post_id}>{post.Titre}</h2>
+      <p>
+        id(prov) : {post.Post_id} , post.persons by :{post.Post_user}
+      </p>
       {post.Post_visuel ? (
         <img
           className="pipo"
@@ -99,11 +105,11 @@ function Post2(props) {
         {post.Contenu}
       </div>
       <p>posté le {post.Date_post}</p>
-      post.persons by :{post.Post_user}
+
       {post.persons ? (
         <>
           <h2>
-            écrit par {post.persons.Pseudo}
+            écrit par {post.persons.Pseudo} <i className="fas fa-user"></i>
             <button onClick={() => myPosts()}>Ses posts !</button>
           </h2>
         </>
@@ -120,15 +126,15 @@ function Post2(props) {
       ) : (
         <></>
       )}
-      <PostComment idPost={post.Post_id} />
+
       {comments2.length > 0 && (
         <div>
           <h3>il y a {comments2.length} commentaires.</h3>
 
-          <Comments2 comments={comments2}></Comments2>
+          <Comments2 postId={post.Post_id} comments={comments2}></Comments2>
         </div>
       )}
-      <Likes2 likes={post.likes} idPost={post.Post_id} />
+      <Likes2 likes={sumUpLike(post.likes)} idPost={post.Post_id} />
     </article>
   );
 }

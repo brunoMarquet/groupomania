@@ -40,7 +40,7 @@ function PostModif2(props) {
     const leToken = theContext.token;
     let envoi = inputs;
     envoi.Post_user = post.Post_user;
-    outils.modifPosts(post.Post_id, leToken, envoi);
+    outils.modifPost(post.Post_id, leToken, envoi);
     // props.refreshPosts();
   }
   /* const delete2 = (a) => {
